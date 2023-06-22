@@ -19,7 +19,7 @@ class FavoritViewModel(
     private val _noMatch = MutableStateFlow(false)
     val noMatch = _noMatch.asStateFlow()
 
-    fun getHighlightPlayer() {
+    fun getFavoriteAnimes() {
         viewModelScope.launch {
             repository.getFavoriteAnime()
                 .catch {

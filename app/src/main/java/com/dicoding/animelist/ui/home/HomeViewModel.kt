@@ -27,8 +27,8 @@ class HomeViewModel(private val repository: AnimeRepository): ViewModel() {
                 .catch { exception ->
                     _result.value = Result.Error(exception.message.toString())
                 }
-                .collect { playerHighlight ->
-                    _result.value = Result.Success(playerHighlight)
+                .collect { animeFavorite ->
+                    _result.value = Result.Success(animeFavorite)
                 }
         }
     }
@@ -40,13 +40,13 @@ class HomeViewModel(private val repository: AnimeRepository): ViewModel() {
                 .catch { exception ->
                     _result.value = Result.Error(exception.message.toString())
                 }
-                .collect { playerHighlight ->
-                    if (playerHighlight.isEmpty()) {
+                .collect { animeFavorite ->
+                    if (animeFavorite.isEmpty()) {
                         _noMatch.value = true
                         _result.value = Result.Success(emptyList())
                     } else {
                         _noMatch.value = false
-                        _result.value = Result.Success(playerHighlight)
+                        _result.value = Result.Success(animeFavorite)
                     }
                 }
         }

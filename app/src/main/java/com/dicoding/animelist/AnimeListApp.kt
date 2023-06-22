@@ -18,6 +18,7 @@ import com.dicoding.animelist.ui.component.BottomBar
 import com.dicoding.animelist.ui.detail.Detail
 import com.dicoding.animelist.ui.favorit.HighlightScreen
 import com.dicoding.animelist.ui.home.HomeScreen
+import com.dicoding.animelist.ui.profile.Profile
 
 @Composable
 fun AnimeListApp(
@@ -74,6 +75,9 @@ fun AnimeListApp(
                             navController.navigate(Screen.Detail.createRoute(id))
                         },
                     )
+                }
+                composable(Screen.Profile.route) {
+                    Profile()
                 }
             }
         }

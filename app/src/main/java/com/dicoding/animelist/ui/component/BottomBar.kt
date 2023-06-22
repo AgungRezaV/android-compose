@@ -3,6 +3,7 @@ package com.dicoding.animelist.ui.component
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -40,10 +42,15 @@ fun BottomBar(
                 icon = Icons.Default.Favorite,
                 screen = Screen.Favorite
             ),
+            NavigationItem(
+                title = "About Me",
+                icon = Icons.Default.Person,
+                screen = Screen.Profile
+            )
         )
         NavigationBar(
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+            contentColor = Color.Red,
         ) {
             navigationItems.map {
                 NavigationBarItem(
@@ -65,7 +72,7 @@ fun BottomBar(
                         }
                     },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MaterialTheme.colorScheme.tertiary,
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
                         selectedTextColor = MaterialTheme.colorScheme.background,
                         indicatorColor = MaterialTheme.colorScheme.background,
                         unselectedIconColor = MaterialTheme.colorScheme.background,

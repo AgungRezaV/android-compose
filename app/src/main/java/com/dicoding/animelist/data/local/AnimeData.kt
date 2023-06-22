@@ -9,7 +9,7 @@ object AnimeData {
             "TV",
             "July 3, 2023",
             "Studio Bind",
-            "Drama, Fantasy Ecchi",
+            "Drama, Fantasy, Ecchi",
             "https://cdn.myanimelist.net/images/anime/1107/136174l.jpg"
         ),
         Anime(

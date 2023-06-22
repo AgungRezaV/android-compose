@@ -50,7 +50,7 @@ fun HighlightScreen(
     viewModel.result.collectAsState(initial = Result.Loading).value.let { resultData ->
         when (resultData) {
             is Result.Loading -> {
-                viewModel.getHighlightPlayer()
+                viewModel.getFavoriteAnimes()
             }
 
             is Result.Success-> {

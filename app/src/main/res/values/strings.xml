@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AnimeList</string>
-    <string name="search_anime">Search Anime</string>
+    <string name="search_anime">Search Anime ...</string>
     <string name="no_data">No Data :(</string>
+    <string name="foto_agung_reza_vergiawan">Foto Agung Reza Vergiawan</string>
+    <string name="agung_reza_vergiawan">Agung Reza Vergiawan</string>
 </resources>

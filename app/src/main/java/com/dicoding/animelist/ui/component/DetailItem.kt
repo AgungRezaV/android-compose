@@ -57,7 +57,7 @@ fun DetailItem(
                 .fillMaxWidth()
                 .height(600.dp)
                 .padding(16.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
+                .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
         ) {
             AsyncImage(
                 model = imageUrl,
@@ -65,7 +65,7 @@ fun DetailItem(
                 contentScale = ContentScale.Crop,
                 modifier = modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
+                    .clip(RoundedCornerShape(8.dp))
             )
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
@@ -87,7 +87,7 @@ fun DetailItem(
                 Icon(
                     imageVector = if (favorite) Icons.Filled.Star else Icons.Outlined.Star,
                     contentDescription = "Favorite",
-                    tint = if (favorite) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onPrimary
+                    tint = if (favorite) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background
                 )
             }
         }
@@ -96,7 +96,7 @@ fun DetailItem(
                 .fillMaxWidth()
                 .heightIn(min = 200.dp)
                 .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary,
             )
