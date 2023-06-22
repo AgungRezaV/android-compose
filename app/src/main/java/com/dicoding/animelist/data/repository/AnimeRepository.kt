@@ -40,6 +40,14 @@ class AnimeRepository {
         return flowOf(result)
     }
 
+    fun getFavoriteAnime(): Flow<List<AnimeFavorite>> {
+        return getAllAnimeFavorite().map {
+            it.filter { anime ->
+                anime.favorite
+            }
+        }
+    }
+
     fun searchAnime(query: String): Flow<List<AnimeFavorite>> {
         return getAllAnimeFavorite().map {
             it.filter { anime ->

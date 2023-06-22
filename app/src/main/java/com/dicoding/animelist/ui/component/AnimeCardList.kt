@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
-fun AnimeFavoriteItem(
+fun AnimeCardList(
     modifier: Modifier = Modifier,
-    imageUrl: String,
     title: String,
     studio: String,
-    genre: String
+    genre: String,
+    imageUrl: String
 ) {
     Column(
         modifier = modifier,

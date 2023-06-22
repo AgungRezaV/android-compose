@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import com.dicoding.animelist.data.local.navigation.Screen
 import com.dicoding.animelist.ui.component.BottomBar
 import com.dicoding.animelist.ui.detail.Detail
+import com.dicoding.animelist.ui.favorit.HighlightScreen
 import com.dicoding.animelist.ui.home.HomeScreen
 
 @Composable
@@ -68,11 +69,11 @@ fun AnimeListApp(
                     )
                 }
                 composable(Screen.Favorite.route) {
-//                    HighlightScreen(
-//                        navigateToDetail = { id ->
-//                            navController.navigate(Screen.Detail.createRoute(id))
-//                        },
-//                    )
+                    HighlightScreen(
+                        navigateToDetail = { id ->
+                            navController.navigate(Screen.Detail.createRoute(id))
+                        },
+                    )
                 }
             }
         }

@@ -1,9 +1,9 @@
-package com.dicoding.animelist.ui.home
+package com.dicoding.animelist.ui.favorit
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,101 +25,87 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dicoding.animelist.R
 import com.dicoding.animelist.data.local.AnimeFavorite
 import com.dicoding.animelist.ui.component.AnimeCardList
+import com.dicoding.animelist.ui.utils.Result
 import com.dicoding.animelist.ui.utils.ViewModelFactory
-import com.dicoding.animelist.ui.utils.Result.*
-import com.dicoding.animelist.ui.component.SearchBar
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun HomeScreen(
+fun HighlightScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(
+    viewModel: FavoritViewModel = viewModel(
         factory = ViewModelFactory()
     ),
     navigateToDetail: (Int) -> Unit,
 ) {
     val systemUiController = rememberSystemUiController()
-    val statusBarColor = MaterialTheme.colorScheme.primary
+    val statusBarColor = MaterialTheme.colorScheme.background
+    val isDark = isSystemInDarkTheme()
     SideEffect {
         systemUiController.setSystemBarsColor(
             color = statusBarColor,
-            darkIcons = false
+            darkIcons = !isDark
         )
     }
 
-    viewModel.result.collectAsState(initial = Loading).value.let { result ->
-        when (result) {
-            is Loading -> {
-                viewModel.getAllAnimeFavorites()
+    viewModel.result.collectAsState(initial = Result.Loading).value.let { resultData ->
+        when (resultData) {
+            is Result.Loading -> {
+                viewModel.getHighlightPlayer()
             }
 
-            is Success -> {
-                AnimeList(
+            is Result.Success-> {
+                AnimeFavoriteList(
                     modifier = modifier,
-                    animeFavorite = result.data,
-                    query = viewModel.query.value,
-                    noMatch = viewModel.noMatch.value,
-                    detail = navigateToDetail,
-                    searchAnime = viewModel::searchFavoriteAnime,
+                    animeFavorite = resultData.data,
+                    noData = viewModel.noMatch.value,
+                    navigateToDetail = navigateToDetail,
                 )
             }
 
-            is Error -> {}
+            is Result.Error -> {}
         }
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AnimeList(
+fun AnimeFavoriteList(
     modifier: Modifier = Modifier,
     animeFavorite: List<AnimeFavorite>,
-    query: String,
-    noMatch: Boolean,
-    detail: (Int) -> Unit,
-    searchAnime: (String) -> Unit,
+    noData: Boolean,
+    navigateToDetail: (Int) -> Unit,
 ) {
-    Column {
-        SearchBar(
-            query = query,
-            onQueryChange = {
-                searchAnime(it)
-            },
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.primary,
-                )
-        )
-        if (noMatch) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(text = stringResource(R.string.no_data))
-            }
-        } else {
+    if (noData) {
+        Box(
+            modifier = modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(text = stringResource(R.string.no_data))
+        }
+    } else {
+        Column {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
+                modifier = modifier,
                 contentPadding = PaddingValues(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = modifier
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(
                     items = animeFavorite,
                     key = { it.anime.id }
                 ) { data ->
                     AnimeCardList(
-                        modifier = Modifier
-                            .clickable {
-                                detail(data.anime.id)
-                            }
-                            .animateItemPlacement(tween(durationMillis = 100)),
+                        imageUrl = data.anime.imageUrl,
                         title = data.anime.title,
                         studio = data.anime.studio,
                         genre = data.anime.genre,
-                        imageUrl = data.anime.imageUrl
+                        modifier = Modifier
+                            .clickable {
+                                navigateToDetail(data.anime.id)
+                            }
+                            .animateItemPlacement(tween(durationMillis = 100))
                     )
                 }
             }
